@@ -102,3 +102,61 @@ def maybe_download():
 
     return train_path, test_path
 ```
+
+10. 将本地代码包加入系统路径，避免本地代码找不到情况发生；
+
+```python
+import os
+import sys
+
+models_path = os.path.join(os.getcwd(), 'models')
+sys.path.append(models_path)
+```
+11. 向`PYTHONPATH`中添加路径；
+
+```python
+import os
+#export PYTHONPATH=${PYTHONPATH}:"$(pwd)/models"
+#running from python you need to set the `os.environ` or the subprocess will not see the directory.
+
+if "PYTHONPATH" in os.environ:
+  os.environ['PYTHONPATH'] += os.pathsep +  models_path
+else:
+  os.environ['PYTHONPATH'] = models_path
+```
+
+12. Linux 中开启网易云音乐命令；
+
+``` shell
+nohup netease-cloud-music --no-sandbox %U &
+```
+
+13. python 中实现类似`switch`操作（通过字典dict方式解决）；
+
+```python
+priorities = {
+        # t_3会因车辆优先级发生改变? 未解决
+        '1': lambda w_: 0,
+        '2': lambda w_: EPSILON_1,
+        '3': lambda w_: EPSILON_1 + EPSILON_2,  # w_ - DELTA_1
+        '4': lambda w_: max(w_ - helpers.convert_datetime_to_day(helpers.DATE_MATCH-car.date_collect), EPSILON_1),
+        '5': lambda w_: max(w_ - helpers.convert_datetime_to_day(helpers.DATE_MATCH-car.date_collect), EPSILON_1) + EPSILON_2,
+        '6': lambda w_: R,
+        '7': lambda w_: R + EPSILON_1,
+        '8': lambda w_: EPSILON_1 + EPSILON_2,  # w_ - DELTA_1
+        '9': lambda w_: max(w_ - helpers.convert_datetime_to_day(helpers.DATE_MATCH-car.date_collect), EPSILON_1) + R,
+        '10': lambda w_: max(w_ - helpers.convert_datetime_to_day(helpers.DATE_MATCH-car.date_collect), EPSILON_1) + R + EPSILON_2,
+        '11': lambda w_: max(w_ - EPSILON_2, 0),
+        '12': lambda w_: w_,
+        '13': lambda w_: w_ + DELTA_2
+    }
+```
+
+14. numpy 中的花式索引，选取某些索引之外的数据；
+
+```python
+orders_lists.append(list(orders_list[over_time]))
+orders_lists.append(list(orders_list[~over_time]))
+cost_matrix_list.append(cost_matrix[over_time, :])
+cost_matrix_list.append(cost_matrix[~over_time, :])
+```
