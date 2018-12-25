@@ -160,3 +160,54 @@ orders_lists.append(list(orders_list[~over_time]))
 cost_matrix_list.append(cost_matrix[over_time, :])
 cost_matrix_list.append(cost_matrix[~over_time, :])
 ```
+
+15. 判断Series为空；
+
+```python
+a = pd.Series([])
+a.empty
+```
+
+16. 忽略代码中的告警信息；
+
+```python
+import warnings
+warnings.filterwarnings('ignore')
+```
+
+17. 指定显卡运行；
+
+```python 
+CUDA_VISIBLE_DEVICES=1 python run.py
+```
+
+18. python 并发编程;
+
+```python
+# 顺序执行
+start_time = time.time()
+for item in number_list:
+    print(evaluate_item(item))
+print("Sequential execution in " + str(time.time() - start_time), "seconds")
+# 线程池执行
+start_time_1 = time.time()
+with concurrent.futures.ThreadPoolExecutor(max_workers=5) as executor:
+    futures = [executor.submit(evaluate_item, item) for item in number_list]
+    for future in concurrent.futures.as_completed(futures):
+        print(future.result())
+print ("Thread pool execution in " + str(time.time() - start_time_1), "seconds")
+# 进程池
+start_time_2 = time.time()
+with concurrent.futures.ProcessPoolExecutor(max_workers=5) as executor:
+    futures = [executor.submit(evaluate_item, item) for item in number_list]
+    for future in concurrent.futures.as_completed(futures):
+        print(future.result())
+print ("Process pool execution in " + str(time.time() - start_time_2), "seconds")
+```
+
+
+
+
+
+
+
