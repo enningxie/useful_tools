@@ -177,7 +177,7 @@ warnings.filterwarnings('ignore')
 
 17. 指定显卡运行；
 
-```python 
+```python
 CUDA_VISIBLE_DEVICES=1 python run.py
 ```
 
@@ -205,9 +205,15 @@ with concurrent.futures.ProcessPoolExecutor(max_workers=5) as executor:
 print ("Process pool execution in " + str(time.time() - start_time_2), "seconds")
 ```
 
+19. 同步最新的`tensorflow/mdoels`;
 
-
-
-
-
-
+``` shell
+# 添加远端地址
+git remote add upstream git@github.com:tensorflow/models.git
+# 获取最新代码
+git fetch upstream
+# 合并最新代码
+git merge upstream/master
+# 提交
+git push
+```
