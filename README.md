@@ -228,3 +228,16 @@ import sys
 sys.path.append(os.path.join(os.path.dirname(__file__), '../'))
 ```
 
+21. TensorFlow等深度学习框架，指定显卡运行
+
+```python
+import os
+os.environ["CUDA_VISIBLE_DEVICES"] = "2"
+```
+
+22. 远程服务器Jupiter Notebook
+
+```shell
+ssh user_name@remote_ip -N -L localhost:local_port:localhost:remote_port
+```
+
