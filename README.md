@@ -241,3 +241,32 @@ os.environ["CUDA_VISIBLE_DEVICES"] = "2"
 ssh user_name@remote_ip -N -L localhost:local_port:localhost:remote_port
 ```
 
+23. numpy去除1的维度
+
+```python
+np.squeeze() 
+```
+
+24. Pandas DataFrame多条件筛选
+
+```python
+raw_data[(raw_data.call_record_no == tmp_phone_call_no) & (raw_data.channel_id == 0)]
+```
+
+25. Numpy 多个ndarray合并
+
+```python
+np.append(ndarray1, ndarray2)
+```
+
+26. Jupyter notebook中pandas dataframe显示不全
+
+```python
+#显示所有列
+pd.set_option('display.max_columns', None)
+#显示所有行
+pd.set_option('display.max_rows', None)
+#设置value的显示长度为100，默认为50
+pd.set_option('max_colwidth',100)
+```
+
