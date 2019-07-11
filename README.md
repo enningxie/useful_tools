@@ -270,3 +270,12 @@ pd.set_option('display.max_rows', None)
 pd.set_option('max_colwidth',100)
 ```
 
+27. tar分包与合并
+
+```shell
+# 分包
+tar czf - test.pdf | split -b 500m - test.tar.gz
+# 合并
+cat test.tar.gz* > test.tar.gz
+```
+
