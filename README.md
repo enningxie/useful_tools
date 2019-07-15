@@ -279,3 +279,33 @@ tar czf - test.pdf | split -b 500m - test.tar.gz
 cat test.tar.gz* > test.tar.gz
 ```
 
+28. conda源修改（清华源）
+
+```shell
+conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/
+conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/
+conda config --set show_channel_urls yes
+```
+
+29. pip修改aliyun源
+
+```shell
+vim ~/.pip/pip.conf
+# 追加
+[global]
+index-url = https://mirrors.aliyun.com/pypi/simple/
+
+[install]
+trusted-host=mirrors.aliyun.com
+```
+
+30. Centos7 添加新用户
+
+```shell
+sudo useradd username
+# 将新增用户添加进指定组
+sudo usermod -a -G groupname username
+# 强制用户在下次登录时修改密码
+sudo passwd -e username
+```
+
