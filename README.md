@@ -309,3 +309,11 @@ sudo usermod -a -G groupname username
 sudo passwd -e username
 ```
 
+31. 将多维列表转为一维列表
+
+```python
+from itertools import chain
+a = [[1, 2], [3]]
+b = list(chain.from_iterable(a))  # [1, 2, 3]
+```
+
