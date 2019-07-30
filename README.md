@@ -225,7 +225,7 @@ git push
 import os
 import sys
 
-sys.path.append(os.path.join(os.path.dirname(__file__), '../'))
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname("__file__"), os.path.pardir, os.path.pardir)))
 ```
 
 21. TensorFlow等深度学习框架，指定显卡运行
@@ -315,5 +315,65 @@ sudo passwd -e username
 from itertools import chain
 a = [[1, 2], [3]]
 b = list(chain.from_iterable(a))  # [1, 2, 3]
+```
+
+32. keras中Lambda进行去除维度1
+
+```python
+x = Lambda(lambda x: x[:, 0])(x)  # shape (3, 1, 2) -> shape (3, 2)
+```
+
+33. 服务器开放/删除端口：
+
+```shell
+/sbin/iptables -I INPUT -p tcp --dport 8080 -j ACCEPT  # 开放
+/sbin/iptables -D INPUT 1  # 删除
+/sbin/iptables -L -n  # 查看
+```
+
+34. Flask框架外网访问：
+
+```python
+app.run(host="0.0.0.0")
+```
+
+35. cURL服务器post交互：
+
+```shell
+curl -X POST -F "image=@dog.jpg" http://localhost:5000/predict
+```
+
+36. centos7安装操作Apache2
+
+```
+yum install httpd  # 安装
+systemctl enable httpd.service  # 服务器开机自启
+systemctl start httpd.service  # 手动启动
+systemctl restart httpd.service  # 手动重启
+systemctl stop httpd.service  # 手动停止
+```
+
+37. NLP任务中，char2indices/indices2char字典构建
+
+```python
+char2indices = dict((c, i) for i, c in enumerate(chars))
+indices2char = dict((i, c) for i, c in enumerate(chars))
+```
+
+38. 使用numpy进行shuffle操作
+
+```python
+import numpy as np
+indices = np.arange(len(y))
+np.random.shuffle(indices)
+x = x[indices]
+y = y[indices]
+```
+
+39. Keras 中将y进行one-hot操作：
+
+```python
+y_train = keras.utils.to_categorical(y_train, num_classes)
+y_test = keras.utils.to_categorical(y_test, num_classes)
 ```
 
