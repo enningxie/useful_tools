@@ -377,3 +377,39 @@ y_train = keras.utils.to_categorical(y_train, num_classes)
 y_test = keras.utils.to_categorical(y_test, num_classes)
 ```
 
+40. 实时看log文件：
+
+```shell
+tail -f bert.log
+```
+
+41. 查看某一目录下的存储使用详情：
+
+```shell
+sudo du -h -d 1 /home
+```
+
+42. conda在指定目录创建虚拟环境，并且所创建的虚拟环境不会出现在`conda info -e`中：
+
+```shell
+conda create -p ENV python=3.6 
+# To activate this environment, use:
+conda activate path_to_env
+```
+
+43. 使用conda安装指定版本的cudnn：
+
+```shell
+conda install cudnn=7.3 -c https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/linux-64/
+```
+
+44. Python3读取json文件，bytes数据转dict
+
+```python
+JSON_PATH = 'data/intent_detect_01.json'
+with open(JSON_PATH, 'r') as f:
+    data = json.load(f)
+
+origin_json = eval(str(data, encoding="utf-8"))
+```
+
