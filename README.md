@@ -413,3 +413,11 @@ with open(JSON_PATH, 'r') as f:
 origin_json = eval(str(data, encoding="utf-8"))
 ```
 
+45. 遍历DataFrame中的每一行
+
+```python
+for _, tmp_row in makeup_labels.iterrows():
+    print(tmp_row.AspectTerms)
+    break
+```
+
