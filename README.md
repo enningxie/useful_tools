@@ -421,3 +421,51 @@ for _, tmp_row in makeup_labels.iterrows():
     break
 ```
 
+46. DataFrame: Count the number of different modalities in each column.
+
+```python
+df.nunique()
+# Reported Job Title    7174
+# SOC minor group         94
+# dtype: int64
+df.value_counts()
+```
+
+47. Cool train/test set split op with DataFrame.
+
+```python
+test_set = df.groupby('SOC minor group', as_index=False)['Reported Job Title'].first()
+train_set = df[~df['Reported Job Title'].isin(test_set['Reported Job Title'])]
+
+x_train, y_train = train_set['Reported Job Title'], train_set['SOC minor group']
+x_test, y_test = test_set['Reported Job Title'], test_set['SOC minor group']
+```
+
+48. Gensim 读入word2vector 
+
+```python
+from gensim.models import KeyedVectors
+from gensim.scripts.glove2word2vec import glove2word2vec
+glove_input_file = '../data/glove.6B.100d.txt'
+word2vec_output_file = '../data/glove.6B.100d.txt.word2vec'
+glove2word2vec(glove_input_file, word2vec_output_file)
+
+model = KeyedVectors.load_word2vec_format('../data/glove.6B.100d.txt.word2vec', binary=False)
+vector = model.wv('computer')
+```
+
+49. Allowing for multiple models to be loaded (once) and used in multiple threads. Note that the `Graph` is stored in the `Session` object, which is a bit more convenient. From [here](https://github.com/tensorflow/tensorflow/issues/28287) .
+
+```python
+# on thread 1
+session = tf.Session(graph=tf.Graph())
+with session.graph.as_default():
+    k.backend.set_session(session)
+    model = k.models.load_model(filepath)
+
+# on thread 2
+with session.graph.as_default():
+    k.backend.set_session(session)
+    model.predict(x, **kwargs)
+```
+
