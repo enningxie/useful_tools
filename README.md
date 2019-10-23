@@ -520,3 +520,34 @@ def main():
     logging.debug('Got here')
 ```
 
+51. Multi-model load and predict.
+
+```python
+import tensorflow as tf
+import keras.backend as K
+# multi-models load
+# bert
+self.session_bert = tf.Session(graph=tf.Graph())
+with self.session_bert.graph.as_default():
+    K.set_session(self.session_bert)
+    self.model_bert = Bert()
+# albert
+self.session_albert = tf.Session(graph=tf.Graph())
+with self.session_albert.graph.as_default():
+    K.set_session(self.session_albert)
+    self.model_albert = Albert()
+    
+# logic op
+if mode == 'fast':
+    self.session = self.session_albert
+    self.model = self.model_albert
+else:
+    self.session = self.session_bert
+    self.model = self.model_bert
+    
+# predict step
+with self.session.graph.as_default():
+    K.set_session(self.session)
+    sim_scores = self.model.predict(user_responses, intents_item)
+```
+
