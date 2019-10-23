@@ -471,3 +471,52 @@ with session.graph.as_default():
     model.predict(x, **kwargs)
 ```
 
+50. 给脚本增加日志功能
+
+```
+# logconfig.ini
+[loggers]
+keys=root
+
+[handlers]
+keys=defaultHandler
+
+[formatters]
+keys=defaultFormatter
+
+[logger_root]
+level=INFO
+handlers=defaultHandler
+qualname=root
+
+[handler_defaultHandler]
+class=StreamHandler
+formatter=defaultFormatter
+# args=('app_.log', 'a')
+
+[formatter_defaultFormatter]
+format=%(levelname)s:%(asctime)s:%(message)s
+```
+
+```python
+import logging
+import logging.config
+
+def main():
+    # Configure the logging system
+    logging.config.fileConfig('logconfig.ini')
+
+    # Variables (to make the calls that follow work)
+    hostname = 'www.python.org'
+    item = 'spam'
+    filename = 'data.csv'
+    mode = 'r'
+
+    # Example logging calls (insert into your program)
+    logging.critical('Host %s unknown', hostname)
+    logging.error("Couldn't find %r", item)
+    logging.warning('Feature is deprecated')
+    logging.info('Opening file %r, mode=%r', filename, mode)
+    logging.debug('Got here')
+```
+
