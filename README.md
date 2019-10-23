@@ -401,6 +401,8 @@ conda activate path_to_env
 
 ```shell
 conda install cudnn=7.3 -c https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/linux-64/
+# tf2.0
+conda install cudnn=7.6.0=cuda10.0_0 -c https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/linux-64/
 ```
 
 44. Python3读取json文件，bytes数据转dict
