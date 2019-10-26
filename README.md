@@ -551,3 +551,147 @@ with self.session.graph.as_default():
     sim_scores = self.model.predict(user_responses, intents_item)
 ```
 
+52. python Web请求示例 REST API：
+
+```python
+import requests
+import json
+
+KERAS_REST_API_URL = "URL"
+
+headers = {
+    'Authorization': '****',
+}
+
+JSON_PATH = 'data/tmp_data.json'
+with open(JSON_PATH, 'r') as f:
+    data = json.load(f)
+
+# submit the request
+r = requests.post(KERAS_REST_API_URL, json=data, headers=headers).content
+
+return_json = eval(str(r, encoding="utf-8"))
+```
+
+```python
+import requests
+import json
+
+KERAS_REST_API_URL = "http://127.0.0.1:8080/test"
+
+JSON_PATH = 'data/tmp_data.json'
+with open(JSON_PATH, 'r') as f:
+    data = json.load(f)
+    
+r = requests.post(KERAS_REST_API_URL, json=data).content
+
+return_json = eval(str(r, encoding="utf-8"))
+```
+
+53. conda/pip 使用
+
+```shell
+pip install [package-name]              # 安装名为[package-name]的包
+pip install [package-name]==X.X         # 安装名为[package-name]的包并指定版本X.X
+pip install [package-name] --proxy=代理服务器IP:端口号         # 使用代理服务器安装
+pip install [package-name] --upgrade    # 更新名为[package-name]的包
+pip uninstall [package-name]            # 删除名为[package-name]的包
+pip list                                # 列出当前环境下已安装的所有包
+```
+
+```shell
+conda install [package-name]        # 安装名为[package-name]的包
+conda install [package-name]=X.X    # 安装名为[package-name]的包并指定版本X.X
+conda update [package-name]         # 更新名为[package-name]的包
+conda remove [package-name]         # 删除名为[package-name]的包
+conda list                          # 列出当前环境下已安装的所有包
+conda search [package-name]         # 列出名为[package-name]的包在conda源中的所有可用版本
+conda create --name [env-name]      # 建立名为[env-name]的Conda虚拟环境
+conda activate [env-name]           # 进入名为[env-name]的Conda虚拟环境
+conda deactivate                    # 退出当前的Conda虚拟环境
+conda env remove --name [env-name]  # 删除名为[env-name]的Conda虚拟环境
+conda env list                      # 列出所有Conda虚拟环境
+```
+
+54. 各种方式增加张量维度
+
+```python
+image = np.expand_dims(image, axis=-1)  
+```
+
+55. TensorFlow恢复与保存变量的代码框架`tf.train.Checkpoint`
+
+```python
+# train.py 模型训练阶段
+
+model = MyModel()
+# 实例化Checkpoint，指定保存对象为model（如果需要保存Optimizer的参数也可加入）
+checkpoint = tf.train.Checkpoint(myModel=model)
+# ...（模型训练代码）
+# 模型训练完毕后将参数保存到文件（也可以在模型训练过程中每隔一段时间就保存一次）
+checkpoint.save('./save/model.ckpt')
+
+# test.py 模型使用阶段
+
+model = MyModel()
+checkpoint = tf.train.Checkpoint(myModel=model)             # 实例化Checkpoint，指定恢复对象为model
+checkpoint.restore(tf.train.latest_checkpoint('./save'))    # 从文件恢复模型参数
+# 模型使用代码
+```
+
+56. TF2中查看当前环境下GPU/CPU，并指定GPU运行
+
+```python
+# 显示可用硬件资源
+gpus = tf.config.experimental.list_physical_devices(device_type='GPU')
+cpus = tf.config.experimental.list_physical_devices(device_type='CPU')
+print(gpus, cpus)
+
+# 指定GPU
+gpus = tf.config.experimental.list_physical_devices(device_type='GPU')
+tf.config.experimental.set_visible_devices(devices=gpus[0:2], device_type='GPU')
+
+# 使用环境变量CUDA_VISIBLE_DEVICES也可以控制
+export CUDA_VISIBLE_DEVICES=2,3
+or
+import os
+os.environ['CUDA_VISIBLE_DEVICES'] = "2,3"
+```
+
+57. 设置显存使用策略
+
+默认情况下，TensorFlow将使用几乎所有可用的显存，以避免内存碎片化所带来的性能损失。TensorFlow提供了两种显存使用策略，能够更灵活地控制程序的显存使用方式：
+
+- 仅在需要时申请显存空间（程序初始运行时消耗很少的显存，随着程序的运行而动态申请显存）；
+
+可以通过 `tf.config.experimental.set_memory_growth` 将 GPU 的显存使用策略设置为 “仅在需要时申请显存空间”。
+
+```python
+gpus = tf.config.experimental.list_physical_devices(device_type='GPU')
+for gpu in gpus:
+    tf.config.experimental.set_memory_growth(device=gpu, True)
+```
+
+- 限制消耗固定大小的显存（程序不会超出限定的显存大小，若超出的报错）
+
+通过 `tf.config.experimental.set_virtual_device_configuration` 选项并传入 `tf.config.experimental.VirtualDeviceConfiguration` 实例，设置 TensorFlow 固定消耗 `GPU:0` 的 1GB 显存（其实可以理解为建立了一个显存大小为 1GB 的 “虚拟 GPU”）。
+
+```python
+gpus = tf.config.experimental.list_physical_devices(device_type='GPU')
+tf.config.experimental.set_virtual_device_configuration(
+    gpus[0],
+    [tf.config.experimental.VirtualDeviceConfiguration(memory_limit=1024)])
+```
+
+58. 单GPU模拟多GPU环境
+
+在实体 GPU `GPU:0` 的基础上建立了两个显存均为 2GB 的虚拟 GPU。
+
+```python
+gpus = tf.config.experimental.list_physical_devices('GPU')
+tf.config.experimental.set_virtual_device_configuration(
+    gpus[0],
+    [tf.config.experimental.VirtualDeviceConfiguration(memory_limit=2048),
+     tf.config.experimental.VirtualDeviceConfiguration(memory_limit=2048)])
+```
+
