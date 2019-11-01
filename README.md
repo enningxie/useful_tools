@@ -613,10 +613,19 @@ conda env remove --name [env-name]  # 删除名为[env-name]的Conda虚拟环境
 conda env list                      # 列出所有Conda虚拟环境
 ```
 
-54. 各种方式增加张量维度
+54. 各种方式增加/降低张量维度
 
 ```python
+# numpy
 image = np.expand_dims(image, axis=-1)  
+# tensorflow
+# Add a channels dimension
+x_train = x_train[..., tf.newaxis]
+x_test = x_test[..., tf.newaxis]
+# tensorflow
+tf.expand_dims(encoded_sample_pred_text, 0)
+tf.squeeze(predictions, 0)
+
 ```
 
 55. TensorFlow恢复与保存变量的代码框架`tf.train.Checkpoint`
