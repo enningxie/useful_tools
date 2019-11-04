@@ -704,3 +704,14 @@ tf.config.experimental.set_virtual_device_configuration(
      tf.config.experimental.VirtualDeviceConfiguration(memory_limit=2048)])
 ```
 
+59. 指定GPU并配置GPU
+
+```python
+physical_devices = tf.config.experimental.list_physical_devices('GPU')
+if physical_devices:
+    used_gpus = physical_devices[:1]
+    tf.config.experimental.set_visible_devices(devices=used_gpus, device_type='GPU')
+    for tmp_gpu in used_gpus:
+        tf.config.experimental.set_memory_growth(device=tmp_gpu, enable=True)
+```
+
