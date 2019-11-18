@@ -715,3 +715,18 @@ if physical_devices:
         tf.config.experimental.set_memory_growth(device=tmp_gpu, enable=True)
 ```
 
+60. 有关时间的操作，`datetime`
+
+```python
+import datetime
+
+# from str
+tmp_date = datetime.datetime.strptime(tmp_data['create_date'], "%Y-%m-%d %H:%M:%S")
+# format
+tmp_create_time = '{}{:02d}{:02d}'.format(str(tmp_date.year)[-2:], tmp_date.month, tmp_date.day)
+# +/-
+tmp_date_ = tmp_date + datetime.timedelta(days=int(res['repay_time']))
+# datetime format
+localtime = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+```
+
