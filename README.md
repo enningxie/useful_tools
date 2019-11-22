@@ -730,3 +730,27 @@ tmp_date_ = tmp_date + datetime.timedelta(days=int(res['repay_time']))
 localtime = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 ```
 
+61. 将path中包含的`~`和`~user`转换成用户目录
+
+```python
+import os
+
+print(os.path.expanduser(path))
+```
+
+62. `logging`模块
+
+```python
+import logging
+
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+```
+
+63. 正则去除文本中的`HTML标签`及`\n`等
+
+```python
+import re
+html = '<body>hello\n</body>'
+re.compile(r'<[^>]+>|\n',re.S).sub('', html)
+```
+
