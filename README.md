@@ -413,6 +413,10 @@ with open(JSON_PATH, 'r') as f:
     data = json.load(f)
 
 origin_json = eval(str(data, encoding="utf-8"))
+
+# json 存储
+with open('data.json', 'w') as f:
+    json.dump(a, f)
 ```
 
 45. 遍历DataFrame中的每一行
