@@ -764,3 +764,13 @@ re.compile(r'<[^>]+>|\n',re.S).sub('', html)
 /home/xen/envs/tf2/lib/python3.6/site-packages/pyhanlp/static/data-for-1.7.5.zip
 ```
 
+65. 当更新完你的`github`密码时，原先本地那些repo再次push的时候就会报错，解决方法：
+
+```shell
+# macos
+git config --global credential.helper osxkeychain
+# windows
+git config --global credential.helper wincred
+
+# 下次push的时候，再次输入username/password就可以正常使用了
+```
