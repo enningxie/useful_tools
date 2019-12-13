@@ -758,3 +758,9 @@ html = '<body>hello\n</body>'
 re.compile(r'<[^>]+>|\n',re.S).sub('', html)
 ```
 
+64. `pyhanlp`附加数据存放路径：
+
+```python
+/home/xen/envs/tf2/lib/python3.6/site-packages/pyhanlp/static/data-for-1.7.5.zip
+```
+
