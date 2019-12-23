@@ -774,3 +774,55 @@ git config --global credential.helper wincred
 
 # 下次push的时候，再次输入username/password就可以正常使用了
 ```
+
+66. Convert TensorFlow 1.0's checkpoints to PyTorch's and TensorFlow 2.0's checkpoints.
+
+```python
+from transformers.convert_bert_original_tf_checkpoint_to_pytorch import convert_tf_checkpoint_to_pytorch
+from transformers.convert_pytorch_checkpoint_to_tf2 import convert_pt_checkpoint_to_tf
+import logging
+import shutil
+import os
+
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+
+
+class Converter(object):
+    def __init__(self, origin_checkpoints_path, config_file, dump_path):
+        self.model_type = 'bert'
+        self.origin_checkpoints_path = origin_checkpoints_path
+        self.config_file = config_file
+        self.dump_path = dump_path
+
+    def convert_to_pytorch(self):
+        convert_tf_checkpoint_to_pytorch(
+            self.origin_checkpoints_path, self.config_file, os.path.join(self.dump_path, 'pytorch_model.bin')
+        )
+        shutil.copyfile(self.config_file, os.path.join(self.dump_path, 'config.json'))
+        shutil.copyfile(os.path.join(os.path.dirname(self.config_file), 'vocab.txt'),
+                        os.path.join(self.dump_path, 'vocab.txt'))
+        logging.info("Convert to PyTorch's checkpoints finished.")
+
+    def convert_to_tf2(self):
+        self.convert_to_pytorch()
+        convert_pt_checkpoint_to_tf(
+            model_type=self.model_type,
+            pytorch_checkpoint_path=os.path.join(self.dump_path, 'pytorch_model.bin'),
+            config_file=os.path.join(self.dump_path, 'config.json'),
+            tf_dump_path=os.path.join(self.dump_path, 'tf_model.h5'),
+            compare_with_pt_model=True
+        )
+        logging.info("Convert to TensorFlow 2.0's checkpoints finished.")
+
+
+if __name__ == '__main__':
+    tmp_converter = Converter(
+        '/Data/public/Bert/chinese_wwm_L-12_H-768_A-12/bert_model.ckpt',
+        '/Data/public/Bert/chinese_wwm_L-12_H-768_A-12/bert_config.json',
+        '/Data/public/transformers/chinese_wwm_L-12_H-768_A-12'
+    )
+
+    # start converting...
+    tmp_converter.convert_to_tf2()
+```
+
