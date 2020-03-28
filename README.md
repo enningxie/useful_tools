@@ -103,7 +103,7 @@ def maybe_download():
     return train_path, test_path
 ```
 
-10. 将本地代码包加入系统路径，避免本地代码找不到情况发生；
+10. 将本地代码包加入系统路径，避免本地代码找不到情况发生，放置于文件顶部；
 
 ```python
 import os
@@ -824,5 +824,36 @@ if __name__ == '__main__':
 
     # start converting...
     tmp_converter.convert_to_tf2()
+```
+
+67. 获取相关路径
+
+```python
+import os 
+
+# 获取当前路径
+os.path.abspath(os.path.dirname(__file__))
+os.getcwd()
+
+# 获取上级路径
+os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
+os.path.abspath(os.path.dirname(os.getcwd()))
+os.path.abspath(os.path.join(os.getcwd(), ".."))
+
+# 获取上上级路径
+os.path.abspath(os.path.join(os.getcwd(), "../.."))
+```
+
+68. Pandas 读写Excel
+
+```python
+import pandas as pd
+# 读取excel
+sheet_data = pd.read_excel(offline_excel_path,
+                               sheet_name='xxx',
+                               header=0)
+# append方式写入excel
+with pd.ExcelWriter(offline_excel_path, mode='a') as writer:
+    sheet_data.to_excel(writer, sheet_name='xxx')
 ```
 
