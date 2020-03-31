@@ -417,6 +417,10 @@ origin_json = eval(str(data, encoding="utf-8"))
 # json 存储
 with open('data.json', 'w') as f:
     json.dump(a, f)
+    
+# json 写
+with open(tokenizer_config_file, "w", encoding="utf-8") as f:
+    f.write(json.dumps(tokenizer_config, ensure_ascii=False))
 ```
 
 45. 遍历DataFrame中的每一行
@@ -857,3 +861,22 @@ with pd.ExcelWriter(offline_excel_path, mode='a') as writer:
     sheet_data.to_excel(writer, sheet_name='xxx')
 ```
 
+69. TF2 单GPU一般设置
+
+```python
+import tensorflow as tf
+# xz
+gpus = tf.config.experimental.list_physical_devices('GPU')
+if gpus:
+    try:
+        # Currently, memory growth needs to be the same across GPUs
+        tf.config.experimental.set_memory_growth(gpus[1], True)
+        tf.config.experimental.set_visible_devices(gpus[1], 'GPU')
+        logical_gpus = tf.config.experimental.list_logical_devices('GPU')
+        print(f'{len(gpus)} Physical GPUs, {len(logical_gpus)} Logical GPUs')
+    except RuntimeError as e:
+        # Memory growth must be set before GPUs have been initialized
+        print(e)
+```
+
+
