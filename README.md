@@ -904,3 +904,18 @@ git commit
 git push
 ```
 
+71. TensorFlow 2.0 mask 相关
+
+```python
+sequence_lengths = tf.math.reduce_sum(tf.cast(tf.math.not_equal(x_batch_train['input_ids'], 0), dtype=tf.int32), axis=-1)
+masks = tf.sequence_mask(sequence_lengths, maxlen=tf.shape(logits)[1], dtype=tf.bool)
+active_logits = tf.boolean_mask(logits, masks)
+active_labels = tf.boolean_mask(y_batch_train, masks)
+```
+
+![image-20200421091158876](assets/image-20200421091158876.png)
+
+![image-20200421091215414](assets/image-20200421091215414.png)
+
+![image-20200421091228450](assets/image-20200421091228450.png)
+
