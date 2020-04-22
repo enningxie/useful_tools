@@ -919,3 +919,39 @@ active_labels = tf.boolean_mask(y_batch_train, masks)
 
 ![image-20200421091228450](assets/image-20200421091228450.png)
 
+72. 判断字符是否为数字，是否为英文字符
+
+```python
+# 判断字符是否为数字
+tmp_char.isdigit()
+# 判断字符是否为英文字符
+tmp_char.encode('utf-8').isalpha()
+```
+
+73. numpy array 累加操作，按位置切分
+
+```python
+tmp_pred_label = np.split(tmp_pred_label_np, np.cumsum(sequence_lengths.numpy())[:-1])
+```
+
+74. list对象map操作
+
+```python
+tmp_pred_label_ = list(map(lambda x: list(x)[1:-1], tmp_pred_label))
+```
+
+75. 多维list数组摊平操作
+
+```python
+from itertools import chain
+tmp_test_data_label_flattened = list(chain(*tmp_test_data_label))
+```
+
+76. 使用`sklearn.metrics.classification_report`对分类后结果进行指标统计
+
+```python
+classification_report(tmp_test_data_label_flattened, total_result_flattened, target_names=class_names)
+```
+
+77. 弃用 --> `Deprecated`.
+
