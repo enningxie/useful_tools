@@ -954,4 +954,63 @@ classification_report(tmp_test_data_label_flattened, total_result_flattened, tar
 ```
 
 77. 弃用 --> `Deprecated`.
+78. 使用`time.perf_counter()`对程序中部分进行性能计算，记录时间
+
+79. pandas Dataframe某一列类别统计：
+
+```python
+tmp_df_cleaned_01.label.value_counts()
+```
+
+80. 使用`sklearn`中`model_selection.train_test_split`对数据按照类别进行分割
+
+```python
+X = tmp_df.sentence
+y = tmp_df.label
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42, stratify=y)
+```
+
+81. pandas Dataframe 对行进行shuffle
+
+```python
+tmp_df_cleaned_02 = tmp_df_cleaned_01.sample(frac=1)
+```
+
+82. rasa project 初始化
+
+```python
+PYTHONIOENCODING='utf8' rasa init
+```
+
+83. `tf.linalg.band_par()`主要功能是以对角线为中心，取它的副对角线部分，其他部分用0填充。
+
+```python
+# input:输入的张量.
+# num_lower:下三角矩阵保留的副对角线数量，从主对角线开始计算，相当于下三角的带宽。取值为负数时，则全部保留。
+# num_upper:上三角矩阵保留的副对角线数量，从主对角线开始计算，相当于上三角的带宽。取值为负数时，则全部保留。
+a=tf.constant( [[ 1,  1,  2, 3],[-1,  2,  1, 2],[-2, -1,  3, 1],
+                 [-3, -2, -1, 5]],dtype=tf.float32)
+b=tf.linalg.band_part(a,2,0)
+c=tf.linalg.band_part(a,1,1)
+d=tf.linalg.band_part(a,-1,1)
+```
+
+84. 修改DataFrame中的值
+
+```python
+labeled_data_df.loc[962, 'label'] = 2
+```
+
+85. 替换Series中的值
+
+```python
+tmp_df_cleaned_02.label = tmp_df_cleaned_02.label.map({2: 0, 1: 1, 0: 0})
+```
+
+86. 修改某一Series的数据类型
+
+```python
+labeled_data_df.label = labeled_data_df.label.astype(np.int64)
+```
 
