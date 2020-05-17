@@ -1014,3 +1014,30 @@ tmp_df_cleaned_02.label = tmp_df_cleaned_02.label.map({2: 0, 1: 1, 0: 0})
 labeled_data_df.label = labeled_data_df.label.astype(np.int64)
 ```
 
+87. 设置某一对象各个属性
+
+```python
+import six
+
+config = AlbertConfig(embedding_size=None, vocab_size=None)
+for (key, value) in six.iteritems(json_object):
+    config.__dict__[key] = value
+```
+
+88. Conda 新环境创建：
+
+```shell
+conda create -n xx python=3.7
+conda install cudatoolkit=10.1
+conda install cudnn=7.6
+```
+
+89. 显示指定显存按需使用：
+
+```python
+import os
+os.environ["TF_FORCE_GPU_ALLOW_GROWTH"] = 'true'
+```
+
+
+
