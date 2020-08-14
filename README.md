@@ -1039,5 +1039,47 @@ import os
 os.environ["TF_FORCE_GPU_ALLOW_GROWTH"] = 'true'
 ```
 
+90. 终端跑代码，需要加入的sys.path信息
 
+```python
+import sys
+sys.path.insert(0, os.path.join(dirname(abspath(__file__)), '../../tests/'))
+```
+
+91. 动态生成变量
+
+```python
+for i in range(5):
+    exec('var{} = {}'.format(i, i))
+```
+
+92. torch 中 tensor 新增维度
+
+```python
+print(points.shape)  # torch.Size([3, 2])
+print(points[None].shape)  # torch.Size([1, 3, 2])
+```
+
+93. 查看CPU信息
+
+```shell
+grep 'physical id' /proc/cpuinfo | sort -u  ## 查看CPU数量
+grep 'core id' /proc/cpuinfo | sort -u | wc -l  ## 查看核心数
+grep 'processor' /proc/cpuinfo | sort -u | wc -l  ## 查看线程数
+```
+
+94. Pytorch中的可选`dtype`
+
+```
+torch.float32 or torch.float: 32-bit floating-point
+torch.float64 or torch.double: 64-bit double-precision floating-point
+torch.float16 or torch.half: 16-bit half-precision floating-point
+torch.int8: signed 8-bit integers
+torch.uint8: unsigned 8-bit integers
+torch.int16 or torch.short: signed 16-bit integers
+torch.int32 or torch.int: signed 32-bit integers
+torch.int64 or torch.long: signed 64-bit integers
+torch.bool: Boolean
+# the default data type for tensors is 32-bit floating-point.
+```
 
