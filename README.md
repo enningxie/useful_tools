@@ -1083,3 +1083,29 @@ torch.bool: Boolean
 # the default data type for tensors is 32-bit floating-point.
 ```
 
+95. 安装完CUDA后，环境变量设置；及加速库cuDNN配置
+
+```shell
+# .bashrc
+export CUDA_HOME=/usr/local/cuda-8.0
+export PATH=/usr/local/cuda-8.0/bin${PATH:+:${PATH}}
+export LD_LIBRARY_PATH=/usr/local/cuda-8.0/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
+
+>>> sudo cp include/cudnn.h /usr/local/cuda-8.0/include/
+>>> sudo cp lib64/* /usr/local/cuda-8.0/lib64/
+```
+
+96. 线下启动EAS服务修改端口号：
+
+```python
+defaults = allspark.default_properties() 
+defaults.put(b'rpc.endpoint', b'0.0.0.0:8089')
+```
+
+97. Pandas df reset_index, drop by index
+
+```python
+tmp_df.drop(index=drop_index, inplace=True)
+tmp_df.reset_index(inplace=True, drop=True)
+```
+
