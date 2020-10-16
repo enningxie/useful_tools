@@ -1109,3 +1109,32 @@ tmp_df.drop(index=drop_index, inplace=True)
 tmp_df.reset_index(inplace=True, drop=True)
 ```
 
+98. Getting reproducible results
+
+```python
+seed = 42
+
+# python RNG
+import random
+random.seed(seed)
+
+# pytorch RNGs
+import torch
+torch.manual_seed(seed)
+torch.backends.cudnn.deterministic = True
+if torch.cuda.is_available(): torch.cuda.manual_seed_all(seed)
+
+# numpy RNG
+import numpy as np
+np.random.seed(seed)
+
+# tf RNG
+tf.random.set_seed(seed)
+```
+
+99. 度量QPS工具`grequests`
+
+```python
+https://github.com/spyoungtech/grequests
+```
+
