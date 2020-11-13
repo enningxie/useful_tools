@@ -1138,3 +1138,22 @@ tf.random.set_seed(seed)
 https://github.com/spyoungtech/grequests
 ```
 
+100. Tensorboard
+
+```python
+tensorboard --logdir ./lightning_logs/ --bind_all
+```
+
+101. QPS = batch_size * 1000 / latency_ms
+102. 修改服务器时区，ubuntu 18.04
+
+```shell
+timedatectl set-timezone Asia/Shanghai
+```
+
+103. 清除指定显卡全部显存
+
+```shell
+sudo fuser -v /dev/nvidia0 |awk '{for(i=1;i<=NF;i++)print "kill -9 " $i;}' | sudo sh
+```
+
